@@ -1,11 +1,39 @@
 {
   "name": "hello-world",
   "version": "0.1.0",
+  "main": "electron/main.js",
+  "build": {
+    "appId": "com.hello.world",
+    "productName": "HelloWorldApp",
+    "files": [
+      "dist/**/*",
+      {
+        "from": "electron",
+        "to": "electron",
+        "filter": [
+          "main.js"
+        ]
+      }
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "electron": "wait-on http://localhost:8080 && electron electron/main.js",
-    "electron:dev": "concurrently \"npm run serve\" \"npm run electron\""
+    "electron:dev": "concurrently \"npm run serve\" \"npm run electron\"",
+    "build:vue": "vue-cli-service build",
+    "build:electron": "npm run build:vue && electron-builder"
   },
   "dependencies": {
     "core-js": "^3.8.3",
